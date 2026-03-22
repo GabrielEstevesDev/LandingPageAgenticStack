@@ -7,7 +7,6 @@ import { Activity, Menu, X } from 'lucide-react';
 const tabs = [
   { id: 'Hero', label: 'Home' },
   { id: 'Process', label: 'Process' },
-  { id: 'Hitl', label: 'HITL' },
   { id: 'Pricing', label: 'Pricing' },
   { id: 'Contact', label: 'Contact' },
   { id: 'Legal', label: 'Mentions' },

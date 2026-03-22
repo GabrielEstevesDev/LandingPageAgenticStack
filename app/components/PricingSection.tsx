@@ -12,9 +12,9 @@ export default function PricingSection() {
         transition={{ duration: 0.6 }}
         className="content-density-fix max-w-7xl"
       >
-        <div className="flex flex-col items-center text-center mb-10">
-          <span className="text-blue-500 font-mono text-xs font-bold uppercase tracking-[0.5em] mb-3">Strategic Investment</span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic mb-4 leading-tight">Scaled Infrastructure.</h2>
+        <div className="flex flex-col items-center text-center mb-6">
+          <span className="text-blue-500 font-mono text-xs font-bold uppercase tracking-[0.5em] mb-2">Strategic Investment</span>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic mb-3 leading-tight">Scaled Infrastructure.</h2>
           <div className="px-5 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-[9px] font-black text-red-400 uppercase tracking-widest backdrop-blur-md">
             Note: LLM API usage fees (OpenAI, Anthropic Claude, etc.) are billed directly to the client.
           </div>

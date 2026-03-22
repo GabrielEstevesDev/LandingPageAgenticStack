@@ -36,8 +36,8 @@ export default function PricingCard({ title, setupPrice, monthlyPrice, descripti
             </div>
           )}
         </div>
-        <p className="text-white/40 text-[10px] mb-6 leading-relaxed font-bold uppercase tracking-wider">{description}</p>
-        <div className="space-y-3 mb-8">
+        <p className="text-white/40 text-[10px] mb-4 leading-relaxed font-bold uppercase tracking-wider">{description}</p>
+        <div className="space-y-2.5 mb-5">
           {features.map((feature, i) => (
             <div key={i} className="flex items-start gap-2.5 text-xs text-white/70">
               <CheckCircle2 className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${highlighted ? 'text-blue-400' : 'text-white/10'}`} />

@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import ProcessSection from './components/ProcessSection';
-import HITLShowcaseSection from './components/HITLShowcaseSection';
 import PricingSection from './components/PricingSection';
 import ContactSection from './components/ContactSection';
 import LegalSection from './components/LegalSection';
@@ -44,7 +43,6 @@ export default function LandingPage() {
 
       <HeroSection />
       <ProcessSection />
-      <HITLShowcaseSection />
       <PricingSection />
       <ContactSection />
       <LegalSection />
