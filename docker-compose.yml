@@ -1,0 +1,13 @@
+services:
+  landing:
+    build: .
+    container_name: agentic-landing
+    restart: unless-stopped
+    networks:
+      - agenticstack_default
+    expose:
+      - "3000"
+
+networks:
+  agenticstack_default:
+    external: true
