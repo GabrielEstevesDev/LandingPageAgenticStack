@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Copy, Check, Zap } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function ContactSection() {
+  const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success'>('idle');
 
@@ -43,21 +45,30 @@ export default function ContactSection() {
   return (
     <section id="contact" className="section-fixed border-t border-white/5 overflow-hidden">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="content-density-fix max-w-7xl"
+        className="w-full flex justify-center"
       >
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div className="content-density-fix max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           <div>
-            <h2 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 uppercase italic leading-none">RECLAIM<br />YOUR FOCUS.</h2>
-            <p className="text-white/40 text-lg mb-10 max-w-sm leading-relaxed">Initiate the architecture review protocol to design your specialized AI workforce.</p>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-3 uppercase italic leading-none whitespace-pre-line">
+              {t.contact.headline}
+            </h2>
+            <p className="text-white/60 text-sm lg:text-base mb-2 max-w-sm leading-relaxed font-medium">{t.contact.sub}</p>
+            <p className="text-white/30 text-sm mb-4 lg:mb-8 max-w-sm">{t.contact.note}</p>
 
-            <div className="group flex items-center justify-between p-5 rounded-3xl bg-white/[0.04] border border-white/10 hover:border-blue-500/50 transition-all cursor-pointer max-w-md" onClick={copyEmail}>
+            <div
+              className="group flex items-center justify-between p-4 lg:p-5 rounded-3xl bg-white/[0.04] border border-white/10 hover:border-blue-500/50 transition-all cursor-pointer max-w-md"
+              onClick={copyEmail}
+            >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500"><Mail className="w-6 h-6" /></div>
+                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                  <Mail className="w-6 h-6" />
+                </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] text-white/20 uppercase font-black tracking-widest">Secure Comms</span>
+                  <span className="text-[9px] text-white/20 uppercase font-black tracking-widest">{t.contact.emailLabel}</span>
                   <span className="font-mono text-sm uppercase tracking-widest text-white/70 group-hover:text-white">contact@agenticstack.fr</span>
                 </div>
               </div>
@@ -65,7 +76,7 @@ export default function ContactSection() {
             </div>
           </div>
 
-          <div className="bg-white/[0.03] border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl shadow-2xl relative min-h-[400px] flex flex-col justify-center">
+          <div className="bg-white/[0.03] border border-white/10 p-5 lg:p-8 rounded-[2rem] lg:rounded-[3rem] backdrop-blur-3xl shadow-2xl relative flex flex-col justify-center">
             <AnimatePresence mode="wait">
               {formStatus === 'success' ? (
                 <motion.div
@@ -79,14 +90,14 @@ export default function ContactSection() {
                     <Check className="w-10 h-10" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white">Transmission Complete</h3>
-                    <p className="text-white/40 text-sm mt-2 font-medium">Your objectives have been received. <br/>Initialization will begin shortly.</p>
+                    <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white">{t.contact.successTitle}</h3>
+                    <p className="text-white/40 text-sm mt-2 font-medium">{t.contact.successSub}</p>
                   </div>
                   <button
                     onClick={() => setFormStatus('idle')}
-                    className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-blue-300 transition-colors"
+                    className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
                   >
-                    Send another protocol
+                    {t.contact.successAgain}
                   </button>
                 </motion.div>
               ) : (
@@ -100,27 +111,39 @@ export default function ContactSection() {
                     <div className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
                     <div className="w-2.5 h-2.5 rounded-full bg-blue-500/30" />
                   </div>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <label className="text-[9px] font-black uppercase tracking-widest text-white/20 italic">Identity</label>
-                        <input required name="name" type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 transition-all outline-none" placeholder="Agent" />
+                        <label className="text-[9px] font-black uppercase tracking-widest text-white/20 italic">{t.contact.nameLabel}</label>
+                        <input
+                          required name="name" type="text"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 transition-all outline-none cursor-text"
+                          placeholder="Prénom Nom"
+                        />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[9px] font-black uppercase tracking-widest text-white/20 italic">Channel</label>
-                        <input required name="email" type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 transition-all outline-none" placeholder="Email" />
+                        <label className="text-[9px] font-black uppercase tracking-widest text-white/20 italic">{t.contact.emailFieldLabel}</label>
+                        <input
+                          required name="email" type="email"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 transition-all outline-none cursor-text"
+                          placeholder="vous@entreprise.fr"
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[9px] font-black uppercase tracking-widest text-white/20 italic">Objective</label>
-                      <textarea required name="message" rows={3} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 transition-all resize-none outline-none" placeholder="Goals..." />
+                      <label className="text-[9px] font-black uppercase tracking-widest text-white/20 italic">{t.contact.messageLabel}</label>
+                      <textarea
+                        required name="message" rows={3}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 transition-all resize-none outline-none cursor-text"
+                        placeholder={t.contact.messagePlaceholder}
+                      />
                     </div>
                     <button
                       type="submit"
                       disabled={formStatus === 'loading'}
-                      className="btn-primary-cyber w-full py-4 text-xs italic disabled:opacity-50"
+                      className="btn-primary-cyber w-full py-4 text-xs italic disabled:opacity-50 cursor-pointer"
                     >
-                      {formStatus === 'loading' ? 'Encrypting...' : 'Initiate Connection'}
+                      {formStatus === 'loading' ? t.contact.submitting : t.contact.submit}
                       {formStatus !== 'loading' && <Zap className="w-4 h-4 fill-white ml-2" />}
                     </button>
                   </form>
@@ -129,6 +152,7 @@ export default function ContactSection() {
             </AnimatePresence>
           </div>
         </div>
+      </div>
       </motion.div>
     </section>
   );

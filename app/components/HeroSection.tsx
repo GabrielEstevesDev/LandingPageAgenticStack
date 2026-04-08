@@ -4,11 +4,14 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, Bot, User, Shield, TrendingUp } from 'lucide-react';
 import ToolBadge from './ui/ToolBadge';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const demoConversations = [
   {
     user: "Show me top 5 products by revenue this month",
     tools: ['SQL'] as const,
+    responseTime: "2.1s",
+    analystTime: "~45 min",
     agent: (
       <div>
         <p className="text-[11px] text-white/60 mb-2 font-medium">Here are your top performers for March 2026:</p>
@@ -36,6 +39,8 @@ const demoConversations = [
   {
     user: "What's our return policy for electronics over $500?",
     tools: ['RAG'] as const,
+    responseTime: "1.8s",
+    analystTime: "~20 min",
     agent: (
       <div>
         <p className="text-[11px] text-white/60 mb-2 font-medium">Based on Return Policy §3.2:</p>
@@ -49,6 +54,8 @@ const demoConversations = [
   {
     user: "Draft a refund email for order #1847",
     tools: ['SQL', 'RAG', 'HITL'] as const,
+    responseTime: "3.4s",
+    analystTime: "~30 min",
     agent: (
       <div>
         <div className="flex items-center gap-2 mb-2">
@@ -57,13 +64,13 @@ const demoConversations = [
         </div>
         <p className="text-[11px] text-white/60 mb-2 font-medium">Draft ready for review. Order #1847: $749.00 Wireless Headphones Pro.</p>
         <div className="flex gap-2 mt-2">
-          <div className="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[9px] font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+          <div className="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[9px] font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5 cursor-pointer">
             <TrendingUp className="w-3 h-3" /> Approve
           </div>
-          <div className="px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[9px] font-bold text-amber-400 uppercase tracking-wider">
+          <div className="px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[9px] font-bold text-amber-400 uppercase tracking-wider cursor-pointer">
             Edit
           </div>
-          <div className="px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/10 text-[9px] font-bold text-white/30 uppercase tracking-wider">
+          <div className="px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/10 text-[9px] font-bold text-white/30 uppercase tracking-wider cursor-pointer">
             Reject
           </div>
         </div>
@@ -73,6 +80,7 @@ const demoConversations = [
 ];
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   const [activeDemo, setActiveDemo] = useState(0);
 
   useEffect(() => {
@@ -94,34 +102,56 @@ export default function HeroSection() {
       >
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-[9px] font-mono font-bold text-blue-400 mb-8 uppercase tracking-[0.3em]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-[9px] font-mono font-bold text-blue-400 mb-5 lg:mb-8 uppercase tracking-[0.3em]">
               <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-              AI E-Commerce Agent — Live Demo
+              {t.hero.badge}
             </div>
 
-            <h1 className="text-5xl md:text-7xl xl:text-8xl font-black leading-[0.85] tracking-tighter mb-8 uppercase italic">
-              YOUR AI<br />
-              WORKFORCE.<br />
+            <h1 className="text-3xl md:text-6xl xl:text-7xl font-black leading-[0.9] tracking-tighter mb-4 lg:mb-6 uppercase italic">
+              {t.hero.h1a}<br />
+              {t.hero.h1b}<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-[length:200%_auto] animate-[gradient_4s_linear_infinite]">
-                LIVE NOW.
+                {t.hero.h1c}
               </span>
             </h1>
 
-            <p className="text-base md:text-lg text-white/40 max-w-lg mb-12 leading-relaxed font-medium">
-              An AI agent that <span className="text-white/80">queries your database</span>, <span className="text-white/80">searches your docs</span>, and <span className="text-white/80">drafts actions</span> — with human approval before anything ships.
+            <p className="text-base md:text-lg text-white/60 max-w-lg mb-4 leading-relaxed font-medium">
+              {t.hero.sub.split(' — ')[0]}
+              {t.hero.sub.includes(' — ') && (
+                <> — <span className="text-white/90">{t.hero.sub.split(' — ')[1]}</span></>
+              )}
             </p>
+
+            {/* Trust bar */}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 lg:mb-10">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white/25 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+                {t.hero.trust1}
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white/25 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 inline-block" />
+                {t.hero.trust2}
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white/25 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 inline-block" />
+                {t.hero.trust3}
+              </span>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-5">
               <a
                 href="https://agenticstack.store/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary-cyber"
+                className="btn-primary-cyber cursor-pointer"
               >
-                Launch Live Demo <ChevronRight className="w-4 h-4" />
+                {t.hero.ctaPrimary} <ChevronRight className="w-4 h-4" />
               </a>
-              <button className="btn-secondary-glass" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
-                View Scaling Plans
+              <button
+                className="btn-secondary-glass cursor-pointer"
+                onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                {t.hero.ctaSecondary}
               </button>
             </div>
           </div>
@@ -129,7 +159,6 @@ export default function HeroSection() {
           {/* Mock Chat Demo */}
           <div className="relative hidden lg:block">
             <div className="relative w-full max-w-md mx-auto">
-              {/* Chat window frame */}
               <div className="bg-white/[0.03] border border-white/10 rounded-[2rem] p-5 backdrop-blur-xl shadow-[0_0_80px_rgba(59,130,246,0.08)]">
                 {/* Window header */}
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
@@ -138,9 +167,9 @@ export default function HeroSection() {
                       <Bot className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-white/80 block">Agentic Stack</span>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white/80 block">{t.hero.demoLabel}</span>
                       <span className="text-[8px] font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">
-                        <span className="w-1 h-1 rounded-full bg-emerald-400" /> Online
+                        <span className="w-1 h-1 rounded-full bg-emerald-400" /> {t.hero.demoOnline}
                       </span>
                     </div>
                   </div>
@@ -150,7 +179,7 @@ export default function HeroSection() {
                       <button
                         key={i}
                         onClick={() => setActiveDemo(i)}
-                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                           i === activeDemo ? 'bg-blue-500 w-4' : 'bg-white/15 hover:bg-white/25'
                         }`}
                       />
@@ -185,11 +214,17 @@ export default function HeroSection() {
                       </div>
                       <div className="bg-white/[0.04] border border-white/10 rounded-2xl rounded-tl-sm px-3.5 py-2.5 flex-1">
                         {demo.agent}
-                        <div className="flex items-center gap-1.5 pt-2.5 mt-2.5 border-t border-white/5">
-                          <span className="text-[8px] font-bold uppercase tracking-widest text-white/20 mr-0.5">Tools:</span>
-                          {demo.tools.map((tool) => (
-                            <ToolBadge key={tool} tool={tool} size="sm" />
-                          ))}
+                        <div className="pt-2.5 mt-2.5 border-t border-white/5 space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[8px] font-bold uppercase tracking-widest text-white/20 mr-0.5">{t.hero.toolsLabel}</span>
+                            {demo.tools.map((tool) => (
+                              <ToolBadge key={tool} tool={tool} size="sm" />
+                            ))}
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-[8px] font-mono text-emerald-400/70">⚡ {demo.responseTime}</span>
+                            <span className="text-[8px] text-white/20 font-medium">{t.hero.analystVs} {demo.analystTime}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -197,7 +232,7 @@ export default function HeroSection() {
                 </AnimatePresence>
               </div>
 
-              {/* Ambient glow behind */}
+              {/* Ambient glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-blue-600/5 blur-[120px] rounded-full -z-10" />
             </div>
           </div>

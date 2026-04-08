@@ -10,9 +10,10 @@ interface PricingCardProps {
   description: string;
   features: string[];
   highlighted?: boolean;
+  roi?: string;
 }
 
-export default function PricingCard({ title, setupPrice, monthlyPrice, description, features, highlighted = false }: PricingCardProps) {
+export default function PricingCard({ title, setupPrice, monthlyPrice, description, features, highlighted = false, roi }: PricingCardProps) {
   return (
     <motion.div
       whileHover={{ y: -5 }}
@@ -27,7 +28,7 @@ export default function PricingCard({ title, setupPrice, monthlyPrice, descripti
         <div className="mb-4 space-y-0.5">
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black">{setupPrice}</span>
-            <span className="text-white/20 text-[9px] font-bold uppercase tracking-widest">Setup</span>
+            {monthlyPrice && <span className="text-white/20 text-[9px] font-bold uppercase tracking-widest">Setup</span>}
           </div>
           {monthlyPrice && (
             <div className="flex items-baseline gap-2">
@@ -36,7 +37,7 @@ export default function PricingCard({ title, setupPrice, monthlyPrice, descripti
             </div>
           )}
         </div>
-        <p className="text-white/40 text-[10px] mb-4 leading-relaxed font-bold uppercase tracking-wider">{description}</p>
+        <p className="text-white/50 text-xs mb-4 leading-relaxed">{description}</p>
         <div className="space-y-2.5 mb-5">
           {features.map((feature, i) => (
             <div key={i} className="flex items-start gap-2.5 text-xs text-white/70">
@@ -45,11 +46,17 @@ export default function PricingCard({ title, setupPrice, monthlyPrice, descripti
             </div>
           ))}
         </div>
+        {roi && (
+          <p className="text-[10px] text-emerald-400/70 leading-relaxed border-t border-white/5 pt-4 mt-2">{roi}</p>
+        )}
       </div>
-      <button className={`w-full py-3.5 rounded-2xl font-black uppercase tracking-widest text-[9px] transition-all mt-auto ${
-        highlighted ? 'bg-blue-600 hover:bg-blue-500' : 'bg-white/5 hover:bg-white/10'
-      }`}>
-        {setupPrice === "Custom" ? "Contact Architecture" : "Deploy Unit"}
+      <button
+        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+        className={`w-full py-3.5 rounded-2xl font-black uppercase tracking-widest text-[9px] transition-all mt-4 ${
+          highlighted ? 'bg-blue-600 hover:bg-blue-500' : 'bg-white/5 hover:bg-white/10'
+        }`}
+      >
+        Réserver un audit gratuit
       </button>
     </motion.div>
   );
